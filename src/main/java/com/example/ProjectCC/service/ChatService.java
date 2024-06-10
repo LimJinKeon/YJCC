@@ -1,13 +1,7 @@
 package com.example.ProjectCC.service;
 
-import com.example.ProjectCC.domain.ChatRoom;
-import com.example.ProjectCC.domain.Declaration;
-import com.example.ProjectCC.domain.Message;
-import com.example.ProjectCC.domain.User;
-import com.example.ProjectCC.repository.ChatRoomRepository;
-import com.example.ProjectCC.repository.DeclarationRepository;
-import com.example.ProjectCC.repository.MessageRepository;
-import com.example.ProjectCC.repository.UserRepository;
+import com.example.ProjectCC.domain.*;
+import com.example.ProjectCC.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +15,7 @@ public class ChatService {
     private final ChatRoomRepository chatRoomRepository;
     private final DeclarationRepository declarationRepository;
     private final MessageRepository messageRepository;
+    private final TagRepository tagRepository;
 
     public List<User> findAllByName(String name) {
         return userRepository.findAllByName(name);
@@ -131,5 +126,27 @@ public class ChatService {
 
     public List<Message> findSavedMessage(String member1, String member2) {
         return messageRepository.findByRoomNumOrderByIdAsc(findRoomNum(member1, member2));
+    }
+
+    public List<String> findTags(String tag) {
+        List<String> tags = new ArrayList<>();
+        List<Tag> tagList = tagRepository.findByTagContaining(tag);
+
+        for(Tag t : tagList) {
+            tags.add(t.getTag());
+        }
+
+        return tags;
+    }
+
+    public Map<String, Tag> findAllByTag(String tag) {
+        Map<String, Tag> map = new HashMap<>();
+        List<Tag> tags = tagRepository.findAllByTag(tag);
+
+        for(Tag t : tags) {
+            map.put(userRepository.findById(t.getUserId()).get().getName(), t);
+        }
+
+        return map;
     }
 }

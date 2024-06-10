@@ -41,3 +41,27 @@ CREATE TABLE `message` (
 COLLATE='utf8mb4_general_ci'
 ENGINE=InnoDB
 ;
+
+CREATE TABLE `declaration` (
+	`no` INT(11) NOT NULL AUTO_INCREMENT,
+	`신고자` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`신고대상` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`욕설` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`성적발언` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`인격모독` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`신고내용` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	PRIMARY KEY (`no`) USING BTREE
+)
+COLLATE='utf8mb4_general_ci'
+ENGINE=InnoDB
+;
+
+CREATE TABLE `tag` (
+	`no` INT(11) NOT NULL AUTO_INCREMENT,
+	`user_id` VARCHAR(20) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`tag` VARCHAR(20) NOT NULL COLLATE 'utf8mb4_general_ci',
+	PRIMARY KEY (`no`) USING BTREE
+)
+COLLATE='utf8mb4_general_ci'
+ENGINE=InnoDB
+;

@@ -9,16 +9,16 @@
     <meta name="generator" content="Hugo 0.122.0">
     <title>YJCC</title>
 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link rel="canonical" href="https://getbootstrap.kr/docs/5.3/examples/sidebars/">
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
     <link href="/docs/5.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="css/home.css" rel="stylesheet">
-    <link href="css/chatting.css" rel="stylesheet">
-
+    <link href="css/tag.css" rel="stylesheet">
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" href="/docs/5.3/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
@@ -29,7 +29,10 @@
     <link rel="icon" href="/docs/5.3/assets/img/favicons/favicon.ico">
     <meta name="theme-color" content="#712cf9">
 
+    <!-- Custom styles for this template -->
+    <link href="sidebars.css" rel="stylesheet">
 </head>
+<body>
 <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
     <symbol id="check2" viewBox="0 0 16 16">
         <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
@@ -183,6 +186,7 @@
             </li>
         </ul>
     </div>
+
     <div style="z-index: 10; width: 280px; display: none; background-color: whitesmoke;" id="chatContent">
         <a href="#" class="d-flex align-items-center flex-shrink-0 p-3 link-body-emphasis text-decoration-none border-bottom">
             <span class="fs-5 fw-semibold">Chat Group</span>
@@ -242,32 +246,32 @@
 
     <div class="b-example-divider b-example-vr" style="visibility: hidden;"></div>
 
-    <div id="myId" style="display: none" th:text="${myId}"></div>
-    <div id="yourId" style="display: none" th:text="${yourId}"></div>
-    <div id="yourName" style="display: none" th:text="${yourName}"></div>
-    <div id="roomNum" style="display: none" th:text="${roomNum}"></div>
-
-    <div id="chat-body">
-        <main>
-            <!-- 채팅 내용 시작 -->
-            <div class="chat-content">
-                <!-- 채팅 내용 -->
-                <div class="main-chat" id="msgArea" style="overflow-y: auto">
-
+    <div id="container" class="clearfix">
+        <div class="content">
+            <div class="col-md-7 col-lg-8">
+                <h4 class="mb-3">#태그 추가</h4>
+                <br>
+                <div class="row g-3 align-items-center">
+                    <div class="col-sm-6">
+                        <label for="tag" class="form-label">#태그</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="tag">
+                            <button class="btn btn-primary" type="button" id="add">추가</button>
+                        </div>
+                    </div>
                 </div>
+                <!-- 태그를 보여줄 div -->
+                <div th:each="tag : ${tags}" id="list" class="badge badge-secondary mr-2 tag">
+                    <span th:text="'#' + ${tag.getTag()}"></span>
+                </div>
+                <div id="tagList" class="badge badge-secondary mr-2 tag"></div>
             </div>
-            <!-- 채팅 입력창 -->
-            <div class="insert-content">
-                <form name="chatform">
-                    <textarea name="chat-insert" id="content" class="chat-insert"></textarea>
-                    <input id="messageSendBtn" value=">" onclick="sendMsg()">
-                </form>
-            </div>
-        </main>
+        </div>
     </div>
+
 </main>
 <script src="/docs/5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="js/home.js"></script>
-<script src="js/chatting.js"></script>
+<script src="js/tag.js"></script>
 </body>
 </html>

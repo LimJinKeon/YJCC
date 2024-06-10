@@ -2,6 +2,7 @@ package com.example.ProjectCC.controller;
 
 import com.example.ProjectCC.domain.ChatRoom;
 import com.example.ProjectCC.domain.Message;
+import com.example.ProjectCC.domain.Tag;
 import com.example.ProjectCC.service.ChatService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +38,7 @@ public class ChatController {
         chatService.saveDecla(map);
     }
 
-    @GetMapping("/findUser")
+    @GetMapping("/findUsers")
     public String findUser(@RequestParam(value = "name")String name, Model model, HttpSession session) {
         model.addAttribute("findUser", chatService.findAllByName(name));
         model.addAttribute("login_id", session.getAttribute("login_id"));
@@ -45,6 +47,33 @@ public class ChatController {
         model.addAttribute("userNames", chatService.findChatName((String) session.getAttribute("login_id")));
 
         return "createChat";
+    }
+
+    @GetMapping("/createChatTag")
+    public String createChatByTag(HttpSession session, Model model) {
+        model.addAttribute("login_id", session.getAttribute("login_id"));
+        model.addAttribute("login_user", session.getAttribute("login_user"));
+        model.addAttribute("chatRoomMsg", chatService.findChat((String) session.getAttribute("login_id")));
+        model.addAttribute("userNames", chatService.findChatName((String) session.getAttribute("login_id")));
+
+        return "createChatByTag";
+    }
+
+    @GetMapping("/findUserTag")
+    public String findTag(@RequestParam(value = "tag")String tag, Model model, HttpSession session) {
+        model.addAttribute("findUsers", chatService.findAllByTag(tag));
+        model.addAttribute("login_id", session.getAttribute("login_id"));
+        model.addAttribute("login_user", session.getAttribute("login_user"));
+        model.addAttribute("chatRoomMsg", chatService.findChat((String) session.getAttribute("login_id")));
+        model.addAttribute("userNames", chatService.findChatName((String) session.getAttribute("login_id")));
+
+        return "createChatByTag";
+    }
+
+    @PostMapping("/findTags")
+    @ResponseBody
+    public List<String> findTag(@RequestBody String tag) {
+        return chatService.findTags(tag);
     }
 
     @GetMapping("/chatting")

@@ -1,8 +1,10 @@
 package com.example.ProjectCC.service;
 
 import com.example.ProjectCC.domain.Profile;
+import com.example.ProjectCC.domain.Tag;
 import com.example.ProjectCC.domain.User;
 import com.example.ProjectCC.repository.ProfileRepository;
+import com.example.ProjectCC.repository.TagRepository;
 import com.example.ProjectCC.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,6 +23,7 @@ public class ProfileService {
 
     private final UserRepository userRepository;
     private final ProfileRepository profileRepository;
+    private final TagRepository tagRepository;
 
     public Optional<Profile> findByUserId(String Id) {
        return profileRepository.findByUserId(Id);
@@ -29,7 +33,6 @@ public class ProfileService {
         if(!image.isEmpty()){
             try {
                 Path imagePath = Paths.get("src/main/resources/static/" + path);
-
                 // 파일 존재 시 삭제
                 Files.deleteIfExists(imagePath);
                 // 파일 저장
@@ -67,5 +70,15 @@ public class ProfileService {
         else {
             return "idNoExist";
         }
+    }
+
+    public void saveTag(String id, String tag) {
+        Tag tagEntity = new Tag();
+        tagEntity.setUserId(id); tagEntity.setTag(tag);
+        tagRepository.save(tagEntity);
+    }
+
+    public List<Tag> findTagById(String id) {
+        return tagRepository.findByUserId(id);
     }
 }
